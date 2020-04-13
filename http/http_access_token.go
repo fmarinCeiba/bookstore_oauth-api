@@ -3,7 +3,8 @@ package http
 import (
 	"net/http"
 
-	"github.com/fmarinCeiba/bookstore_oauth-api/domain/access_token"
+	atDomain "github.com/fmarinCeiba/bookstore_oauth-api/domain/access_token"
+	"github.com/fmarinCeiba/bookstore_oauth-api/services/access_token"
 	"github.com/fmarinCeiba/bookstore_oauth-api/utils/errors"
 	"github.com/gin-gonic/gin"
 )
@@ -33,17 +34,18 @@ func (h *accessTokenHandler) GetByID(c *gin.Context) {
 }
 
 func (h *accessTokenHandler) Create(c *gin.Context) {
-	var at access_token.AccessToken
-	if err := c.ShouldBindJSON(&at); err != nil {
+	var atr atDomain.AccessTokenRequest
+	if err := c.ShouldBindJSON(&atr); err != nil {
 		rErr := errors.NewBadRequestError("invalid json")
 		c.JSON(rErr.Status, rErr)
 		return
 	}
-	if err := h.service.Create(at); err != nil {
+	accessToken, err := h.service.Create(atr)
+	if err != nil {
 		c.JSON(err.Status, err)
 		return
 	}
-	c.JSON(http.StatusCreated, at)
+	c.JSON(http.StatusCreated, accessToken)
 }
 
 func (h *accessTokenHandler) UpdateExpirationTime(c *gin.Context) {

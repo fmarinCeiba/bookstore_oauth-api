@@ -11,18 +11,18 @@ import (
 
 var (
 	usersRestClient = rest.RequestBuilder{
-		BaseURL: "http://localhost:8080",
+		BaseURL: "http://localhost:8081",
 		Timeout: 100 * time.Microsecond,
 	}
 )
 
-type RestUserRepository interface {
+type RestUsersRepository interface {
 	LoginUser(string, string) (*users.User, *errors.RestErr)
 }
 
 type usersRepository struct{}
 
-func NewRepository() RestUserRepository {
+func NewRepository() RestUsersRepository {
 	return &usersRepository{}
 }
 
