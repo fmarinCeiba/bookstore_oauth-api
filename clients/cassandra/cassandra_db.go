@@ -13,7 +13,7 @@ var (
 func init() {
 	// connect to Cassandra cluster:
 	cluster := gocql.NewCluster("localhost")
-	cluster.Port = 32769
+	cluster.Port = 9042
 	cluster.Keyspace = "oauth"
 	cluster.Consistency = gocql.Quorum
 
