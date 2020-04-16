@@ -38,7 +38,7 @@ func (ur *usersRepository) LoginUser(email string, password string) (*users.User
 	}
 	if resp.StatusCode > 299 {
 		apiErr, err := rest_errors.NewRestErrorFromBytes(resp.Bytes())
-		if err := nil {
+		if err == nil {
 			return nil, rest_errors.NewInternalServerError("invalid error interface when to trying to login user", err)
 		}
 		return nil, apiErr
